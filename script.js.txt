@@ -1,0 +1,62 @@
+const storyElement = document.getElementById("story");
+const choice1Button = document.getElementById("choice1");
+const choice2Button = document.getElementById("choice2");
+
+let currentStep = 0;
+
+const storySteps = [
+    {
+        text: "Você acorda em uma floresta escura. O que você faz?",
+        choices: [
+            { text: "Explorar a floresta", nextStep: 1 },
+            { text: "Chamar por ajuda", nextStep: 2 }
+        ]
+    },
+    {
+        text: "Você encontra uma estrada. Você segue em frente ou volta?",
+        choices: [
+            { text: "Seguir em frente", nextStep: 3 },
+            { text: "Voltar", nextStep: 0 }
+        ]
+    },
+    {
+        text: "Ninguém responde. Você decide...",
+        choices: [
+            { text: "Explorar mais a fundo", nextStep: 1 },
+            { text: "Ficar parado", nextStep: 4 }
+        ]
+    },
+    {
+        text: "Você encontra um lago bonito e relaxa.",
+        choices: [
+            { text: "Continuar a aventura", nextStep: 0 }
+        ]
+    },
+    {
+        text: "Você se sente inseguro e decide esperar.",
+        choices: [
+            { text: "Esperar mais um pouco", nextStep: 0 }
+        ]
+    }
+];
+
+function updateStory() {
+    const step = storySteps[currentStep];
+    storyElement.innerText = step.text;
+    choice1Button.innerText = step.choices[0].text;
+    choice2Button.innerText = step.choices[1] ? step.choices[1].text : "";
+    choice2Button.style.display = step.choices[1] ? "block" : "none";
+}
+
+choice1Button.addEventListener("click", () => {
+    currentStep = storySteps[currentStep].choices[0].nextStep;
+    updateStory();
+});
+
+choice2Button.addEventListener("click", () => {
+    currentStep = storySteps[currentStep].choices[1].nextStep;
+    updateStory();
+});
+
+// Iniciar a aventura
+updateStory();
